@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: easy-recipes-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: easy-recipes
+                port:
+                  number: 80
+#          - path: /message
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: spring-boot-service
+#                port:
+#                  number: 80

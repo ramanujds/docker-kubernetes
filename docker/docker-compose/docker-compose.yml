@@ -1,0 +1,28 @@
+name: 'my-app'
+networks:
+  app-network:
+
+services:
+  easy-recipes:
+    image: ram1uj/easy-recipes
+    restart: always
+    ports:
+      - "80:8080"
+    networks:
+      - app-network
+
+  flask-app:
+    image: ram1uj/flask-app
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  spring-boot:
+    image: ram1uj/spring-boot
+    restart: always
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network

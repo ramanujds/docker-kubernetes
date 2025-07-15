@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: ram1uj/notes-app-user-service
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: notes-app-config
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                    name: notes-app-config
+                    key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                    name: notes-app-secrets
+                    key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                      name: notes-app-secrets
+                      key: DB_PASSWORD
+          ports:
+            - containerPort: 8200
+
+#      initContainers:
+#        - name: init-mysql-test
+#          image: mysql:latest
+#          env:
+#              - name: MYSQL_ROOT_PASSWORD
+#                value: password
+#              - name: MYSQL_DATABASE
+#                valueFrom:
+#                    configMapKeyRef:
+#                      name: notes-app-config
+#                      key: DB_NAME
+#          command: ['sh', '-c', 'echo "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE" | mysql -h mysql-service -P 3306 -u root -p$MYSQL_ROOT_PASSWORD']

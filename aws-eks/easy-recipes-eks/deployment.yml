@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: easy-recipes
+  labels:
+    app: easy-recipes
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: easy-recipes
+  template:
+    metadata:
+      labels:
+        app: easy-recipes
+    spec:
+      containers:
+        - name: easy-recipes
+          image: ram1uj/easy-recipes
+          ports:
+            - containerPort: 8080

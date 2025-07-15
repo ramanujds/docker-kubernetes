@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: ram1uj/easy-recipes
+  pullPolicy: Always
+  tag: "latest"
+
+service:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: NodePort
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 80
+  targetPort: 8080
+
+
+
+resources:
+   limits:
+     cpu: 100m
+     memory: 128Mi
+   requests:
+     cpu: 100m
+     memory: 128Mi
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

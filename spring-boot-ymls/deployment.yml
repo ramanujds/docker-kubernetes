@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot
+#  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: spring-boot
+    spec:
+      containers:
+        - name: spring-boot-container
+          image: ram1uj/spring-boot:latest
+          ports:
+            - containerPort: 5000
+          env:
+            - name: APP_MESSAGE
+              valueFrom:
+                secretKeyRef:
+                  key: SECRET_MESSAGE
+                  name: spring-boot-secret

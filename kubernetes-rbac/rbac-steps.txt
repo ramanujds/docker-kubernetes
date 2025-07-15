@@ -1,0 +1,27 @@
+Step 1 - apply the role,service account, and role binding to the cluster
+
+kubectl apply -f .
+
+Step 2 - verify the role, service account, and role binding
+
+kubectl auth can-i get pods --as=dev-user
+kubectl auth can-i get deployments --as=dev-user
+
+Step 3 - set the credentials for the service account
+
+kubectl config set-credentials dev-user --token=$(kubectl create token dev-user)
+
+Step 4 - set the context to use the service account
+
+kubectl config set-context dev-user-context --user=dev-user --namespace=default
+
+
+Step 5 - use the context to access the cluster
+
+kubectl config use-context dev-user-context
+
+Step 6 - verify the access
+
+kubectl get pods
+kubectl get deployments
+

@@ -1,0 +1,20 @@
+name: 'ecom-app'
+networks:
+  app-network:
+
+services:
+  product-service:
+    image: ram1uj/ecom-app-product-service
+    restart: always
+    ports:
+      - "8100:8100"
+    networks:
+      - app-network
+
+  order-service:
+    image: ram1uj/ecom-app-order-service
+    restart: always
+    ports:
+      - "8200:8200"
+    networks:
+      - app-network

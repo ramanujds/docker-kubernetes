@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-app-with-sidecar
+spec:
+  containers:
+    - name: spring-boot-app
+      image: ram1uj/spring-boot
+      ports:
+        - containerPort: 5000
+      volumeMounts:
+        - name: shared-logs
+          mountPath: /app/logs
+      command: ["/bin/sh"]
+      args: ["-c", "java -jar app.jar > /app/logs/app.log"]
+
+    - name: log-agent
+      image: busybox
+      volumeMounts:
+        - name: shared-logs
+          mountPath: /app/logs
+      command: ["/bin/sh"]
+      args: ["-c", "tail -n+1 -F /app/logs/app.log"]
+
+  volumes:
+    - name: shared-logs
+      emptyDir: {}
