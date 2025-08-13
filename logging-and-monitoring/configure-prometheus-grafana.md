@@ -37,12 +37,26 @@ minikube service prometheus-server-ext --url
 
 Copy the URL for `prometheus-server-ext` (the first one shown).
 
+## For Docker-Desktop
+
+- Get the node ip
+
+```sh
+
+kubectl get nodes -o wide
+
+```
+
+
+
 ## 6. Configure Grafana
 
 1. Open Grafana in your browser using the URL from above.
 2. Add a new data source:
     - Select **Prometheus** as the data source type.
-    - Paste the `prometheus-server-ext` URL.
+    - Paste the `prometheus-server-ext` URL. (For Minikube)
+    - Paste http://[node-ip]:[node-port] (For Docker Desktop)
+    
 3. Create a new dashboard:
     - Go to **Create** → **Import Dashboard**.
     - Input dashboard ID: `15661`.
