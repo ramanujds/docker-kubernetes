@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cart-service
+spec:
+  selector:
+    matchLabels:
+      app: cart-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cart-service
+    spec:
+      containers:
+        - name: cart-service-container
+          image: ram1uj/k8s-cart-app:latest
+          ports:
+            - containerPort: 8080

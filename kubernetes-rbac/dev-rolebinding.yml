@@ -1,13 +1,13 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: dev-role-binding
+  name: qa-role-binding
 #  namespace: dev
 subjects:
   - kind: ServiceAccount
-    name: dev-user
+    name: qa-user
 
 roleRef:
   kind: Role
-  name: dev-role
+  name: qa-role
   apiGroup: rbac.authorization.k8s.io

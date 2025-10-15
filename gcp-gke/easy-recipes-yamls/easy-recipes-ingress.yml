@@ -8,17 +8,17 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /categories
             pathType: Prefix
             backend:
               service:
                 name: easy-recipes
                 port:
                   number: 80
-#          - path: /message
-#            pathType: Prefix
-#            backend:
-#              service:
-#                name: spring-boot-service
-#                port:
-#                  number: 80
+          - path: /info
+            pathType: Prefix
+            backend:
+              service:
+                name: spring-boot-service
+                port:
+                  number: 80
