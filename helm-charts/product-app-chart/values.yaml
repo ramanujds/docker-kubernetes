@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: ram1uj/easy-recipes
+  pullPolicy: Always
+  tag: "latest"
+  containerPort: 8080
+
+
+service:
+  type: NodePort
+  port: 80
+
+
+
