@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+spec:
+  clusterIP: None
+  selector:
+    app: mongodb
+  ports:
+    - port: 27017
+      targetPort: 27017
+
+# How to access:
+# 1. Get the MongoDB pod names:
+# 2. mongodb-0.mongodb.default.svc.cluster.local
+# 3. mongodb-1.mongodb.default.svc.cluster.local

@@ -7,5 +7,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-        storage: 100Mi
-#  volumeName: mysql-volume
+        storage: 500Mi
