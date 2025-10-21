@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cart Items</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" th:text="'Product App'">Product App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/products}">All Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/view-cart}">View Cart</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div th:if="${error}" class="alert alert-danger" role="alert">
+    <span th:text="${error}">Error message</span>
+</div>
+
+<div th:if="${message}" class="alert alert-success" role="alert">
+    <span th:text="${success}">Success message</span>
+</div>
+
+<h2>Available Products</h2>
+<!--show in cards with bootstrap -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" th:each="item : ${cartItems}">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${item.name}">Product Name</h5>
+                    <p class="card-text">
+                        Price: <span th:text="${item.price}">0.00</span>
+                    </p>
+                    <p class="card-text">
+                        Quantity: <span th:text="${item.quantity}">0</span>
+                    </p>
+                    <p class="card-text">
+                        Total: <span th:text="${item.totalPrice}">0.00</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<!--add bootstrap-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home - My Product App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#" th:text="'Product App'">Product App</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/products}">All Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/view-cart}">View Cart</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="container mt-4">
+    <h1>Welcome to My Product App!</h1>
+    <p>Browse our products and manage your cart easily.</p>
+</div>
+</body>
+</html>

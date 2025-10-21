@@ -1,0 +1,12 @@
+INSERT INTO product (id, name, price) VALUES (1, 'iPhone 14', 999.99);
+INSERT INTO product (id, name, price) VALUES (2, 'Samsung Galaxy S22', 899.99);
+INSERT INTO product (id, name, price) VALUES (3, 'Google Pixel 6', 599.99);
+INSERT INTO product (id, name, price) VALUES (4, 'OnePlus 9', 729.99);
+INSERT INTO product (id, name, price) VALUES (5, 'Sony Xperia 5 III', 999.99);
+INSERT INTO product (id, name, price) VALUES (6, 'Xiaomi Mi 11', 749.99);
+INSERT INTO product (id, name, price) VALUES (7, 'Oppo Find X3 Pro', 1149.99);
+INSERT INTO product (id, name, price) VALUES (8, 'Motorola Edge 20 Pro', 699.99);
+INSERT INTO product (id, name, price) VALUES (9, 'Asus Zenfone 8', 599.99);
+INSERT INTO product (id, name, price) VALUES (10, 'Nokia X20', 499.99);
+INSERT INTO product (id, name, price) VALUES (11, 'Huawei P40 Pro', 899.99);
+INSERT INTO product (id, name, price) VALUES (12, 'Realme GT', 549.99);
