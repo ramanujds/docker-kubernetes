@@ -3,6 +3,7 @@ package com.ecomapp.productapp.controller;
 import com.ecomapp.productapp.dto.CartItem;
 import com.ecomapp.productapp.model.Product;
 import com.ecomapp.productapp.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +11,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+
+
 @Controller
 public class ProductViewController {
+
+    @Value("${CART_SERVICE_URL}")
+    private String cartServiceUrl;
 
     private final ProductRepository productRepo;
     private final RestTemplate restTemplate;

@@ -1,0 +1,22 @@
+name: 'ecom-app'
+networks:
+  app-network:
+
+services:
+  cart-service:
+    image: ram1uj/cart-app
+    ports:
+      - "8100-8199:80"
+    command: ["--server.port=80"]
+    networks:
+      - app-network
+
+  product-service:
+    image: ram1uj/product-app
+    ports:
+      - "8200-8299:8080"
+    networks:
+      - app-network
+
+
+

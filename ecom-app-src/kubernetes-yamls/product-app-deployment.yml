@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-app
+spec:
+  selector:
+    matchLabels:
+      app: product-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: product-app
+    spec:
+      containers:
+        - name: product-app-container
+          image: ram1uj/product-app:latest
+          ports:
+            - containerPort: 8080
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "250m"
+        limits:
+          memory: "512Mi"
+          cpu: "500m"
