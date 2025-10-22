@@ -16,8 +16,8 @@ import java.util.List;
 @Controller
 public class ProductViewController {
 
-    @Value("${CART_SERVICE_URL}")
-    private String cartServiceUrl;
+//    @Value("${CART_SERVICE_URL}")
+//    private String cartServiceUrl;
 
     private final ProductRepository productRepo;
     private final RestTemplate restTemplate;

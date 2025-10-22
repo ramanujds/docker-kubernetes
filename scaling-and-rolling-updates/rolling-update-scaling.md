@@ -125,7 +125,7 @@ spec:
 ---
 
 ### **Best Practices for Rolling Updates & Scaling**
-✅ **Use Probes**: Add **liveness** and **readiness** probes to avoid downtime during updates.
+**Use Probes**: Add **liveness** and **readiness** probes to avoid downtime during updates.
 ```yaml
 livenessProbe:
   httpGet:

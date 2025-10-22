@@ -17,6 +17,69 @@ spec:
           image: ram1uj/product-app:latest
           ports:
             - containerPort: 8080
+          env:
+            - name: CART_SERVICE_URL
+              value: "http://cart-service/api/carts"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          startupProbe:
+            exec:
+              command:
+                - "ls"
+                - "/boot"
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 5
+
+      tolerations:
+        - key: "app"
+          operator: "Equal"
+          value: "backend"
+          effect: "NoSchedule"
+
+#      nodeSelector:
+#        disktype: hdd
+
+#      affinity:
+#         nodeAffinity:
+#           preferredDuringSchedulingIgnoredDuringExecution:
+#                - weight: 1
+#                  preference:
+#                    matchExpressions:
+#                      - key: disktype
+#                        operator: In
+#                        values:
+#                          - hdd
+#
+#           requiredDuringSchedulingIgnoredDuringExecution:
+#             nodeSelectorTerms:
+#               - matchExpressions:
+#                   - key: disktype
+#                     values:
+#                       - ssd
+#                     operator: In
+
+
+
+
+
       resources:
         requests:
           memory: "256Mi"

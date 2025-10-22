@@ -10,10 +10,10 @@
 
 ## AWS EKS vs GKE: Built-in Autoscaler
 
-| Platform | Built-in Autoscaler         | Manual Setup Needed?                   |
-| -------- | --------------------------- | -------------------------------------- |
-| **GKE**  | Yes (Native support)        | ❌ Not required (Just enable it)        |
-| **EKS**  | No (Not enabled by default) | ✅ Yes, you must install & configure it |
+| Platform | Built-in Autoscaler         | Manual Setup Needed?                 |
+| -------- | --------------------------- | ------------------------------------ |
+| **GKE**  | Yes (Native support)        | Not required (Just enable it)        |
+| **EKS**  | No (Not enabled by default) | Yes, you must install & configure it |
 
 ---
 
