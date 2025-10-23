@@ -50,7 +50,7 @@ public class ProductViewController {
         }
         // display a message if the cart-service is not available
         try {
-        restTemplate.postForObject("http://cart-service/api/carts", product, Product.class);
+        restTemplate.postForObject("http://cart-service/carts", product, Product.class);
         } catch (Exception e) {
             model.addAttribute("error", "Cart service is currently unavailable. Please try again later.");
             return "redirect:/view-cart";
@@ -64,7 +64,7 @@ public class ProductViewController {
     public String viewCart(Model model) {
 
         try{
-        CartItem[] cartItems = restTemplate.getForObject("http://cart-service/api/carts", CartItem[].class);
+        CartItem[] cartItems = restTemplate.getForObject("http://cart-service/carts", CartItem[].class);
         List<CartItem> items = List.of(cartItems);
         model.addAttribute("cartItems", items);
         } catch (Exception e) {

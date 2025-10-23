@@ -14,12 +14,13 @@ spec:
     spec:
       containers:
         - name: product-app-container
-          image: ram1uj/product-app:latest
+          image: ram1uj/product-app:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:
             - name: CART_SERVICE_URL
-              value: "http://cart-service/api/carts"
+              value: "http://cart-service/carts"
           livenessProbe:
             httpGet:
               path: /health

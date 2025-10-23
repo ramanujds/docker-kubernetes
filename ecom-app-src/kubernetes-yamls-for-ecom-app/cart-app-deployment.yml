@@ -14,6 +14,7 @@ spec:
     spec:
       containers:
         - name: cart-app-container
-          image: ram1uj/cart-app:latest
+          image: ram1uj/cart-app:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080

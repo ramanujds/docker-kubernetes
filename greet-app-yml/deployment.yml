@@ -21,6 +21,6 @@ spec:
             - name: MESSAGE
               valueFrom:
                 secretKeyRef:
-                  name: greet-app-secret
                   key: MESSAGE
+                  name: greet-app-secret
 
