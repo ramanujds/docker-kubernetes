@@ -1,0 +1,21 @@
+
+replicaCount: 2
+
+image:
+  repository: ram1uj/product-app
+  pullPolicy: IfNotPresent
+  tag: "v1"
+  containerPort: 8080
+
+
+service:
+   type: NodePort
+   port: 80
+   nodePort: 30001
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
