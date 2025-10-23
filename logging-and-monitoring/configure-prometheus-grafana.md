@@ -25,7 +25,12 @@ helm install grafana grafana/grafana --version 8.12.0
 
 ```sh
 kubectl expose service grafana --type=NodePort --target-port=3000 --name=grafana-ext
-kubectl expose service prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-ext
+```
+
+### Optional: Expose Prometheus Service
+
+```sh
+kubectl expose service prometheus-server --type=NodePort --target-port=80 --name=prometheus-server-ext
 ```
 
 ## 5. Access Services via Minikube
@@ -39,14 +44,7 @@ Copy the URL for `prometheus-server-ext` (the first one shown).
 
 ## For Docker-Desktop
 
-- Get the node ip
-
-```sh
-
-kubectl get nodes -o wide
-
-```
-
+ Use the name of the prometheus-server service directly
 
 
 ## 6. Configure Grafana
@@ -55,7 +53,7 @@ kubectl get nodes -o wide
 2. Add a new data source:
     - Select **Prometheus** as the data source type.
     - Paste the `prometheus-server-ext` URL. (For Minikube)
-    - Paste http://[node-ip]:[node-port] (For Docker Desktop)
+    - Paste http://prometheus-server:80 (For Docker Desktop)
     
 3. Create a new dashboard:
     - Go to **Create** → **Import Dashboard**.
