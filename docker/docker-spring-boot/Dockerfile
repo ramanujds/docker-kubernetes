@@ -5,7 +5,7 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Run stage
-FROM openjdk:21-jdk-slim
+FROM amazoncorretto:25-jdk
 WORKDIR /
 COPY --from=build /app/target/*.jar app.jar
 CMD ["java", "-jar", "app.jar"]

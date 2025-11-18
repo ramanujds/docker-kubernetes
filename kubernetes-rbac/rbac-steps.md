@@ -5,6 +5,19 @@
 kubectl apply -f kubernetes-rbac/
 ```
 
+## Test the setup
+
+```bash
+
+kubectl auth can-i get pods --as=system:serviceaccount:dev:dev-user --namespace=dev
+
+```
+
+```bash
+
+kubectl auth can-i get deployment --as=system:serviceaccount:dev:dev-user --namespace=dev
+
+```
 
 # 2) Create token for the service account (note -n dev)
 ```bash
