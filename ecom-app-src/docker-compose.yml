@@ -6,15 +6,16 @@ services:
   cart-service:
     image: ram1uj/cart-app
     ports:
-      - "8100-8199:80"
-    command: ["--server.port=80"]
+      - "8100:80"
+    environment:
+      SERVER_PORT: 80
     networks:
       - app-network
 
   product-service:
     image: ram1uj/product-app
     ports:
-      - "8200-8299:8080"
+      - "8200:8080"
     networks:
       - app-network
 
