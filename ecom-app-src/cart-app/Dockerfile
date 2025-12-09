@@ -5,10 +5,8 @@ COPY . .
 RUN mvn clean package -DskipTests
 
 # Run stage
-FROM openjdk:21-jdk-slim
+FROM amazoncorretto:25-jdk
 WORKDIR /
 COPY --from=build /app/target/*.jar app.jar
-RUN useradd -u 1000 appuser
-USER appuser
 ENTRYPOINT ["java", "-jar", "app.jar"]
 EXPOSE 8080
