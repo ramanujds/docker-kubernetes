@@ -1,34 +1,39 @@
-name: spring-boot-mysql-app
+#name: spring-boot-mysql-app
 networks:
-    my-app-network:
+  my-app-network:
+
+volumes:
+  mysql-data:
 
 services:
-    mysql:
-      image: mysql:8.0
-      environment:
-        MYSQL_ROOT_PASSWORD: password
-        MYSQL_DATABASE: mydb
-      networks:
-        - my-app-network
-      healthcheck:
-        test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppassword"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-        start_period: 10s
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: mydb
+    networks:
+      - my-app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - mysql-data:/var/lib/mysql
 
-    spring-boot-app:
-      image: ram1uj/spring-mysql:latest
-      depends_on:
-        mysql:
-          condition: service_healthy
-      environment:
-        MYSQL_HOST: mysql
-        MYSQL_PORT: 3306
-        MYSQL_DB: mydb
-        MYSQL_USER: root
-        MYSQL_PASSWORD: password
-      ports:
-        - "8000:8080"
-      networks:
-        - my-app-network
+  spring-boot-app:
+    image: ram1uj/spring-mysql:latest
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: mydb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    ports:
+      - "8000:8080"
+    networks:
+      - my-app-network
