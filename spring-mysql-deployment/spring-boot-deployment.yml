@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: spring-boot-deployment
+spec:
+    selector:
+        matchLabels:
+            app: spring-boot-app
+    replicas: 2
+    template:
+        metadata:
+            labels:
+                app: spring-boot-app
+        spec:
+            containers:
+            - name: spring-boot-app
+              image: ram1uj/spring-mysql
+              ports:
+              - containerPort: 8080
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: MYSQL_HOST
+                  value: mysql-service
+                - name: MYSQL_PORT
+                  value: "3306"
+                - name: MYSQL_DB
+                  value: mydb
+                - name: MYSQL_USER
+                  value: root
+                - name: MYSQL_PASSWORD
+                  value: password123
+
