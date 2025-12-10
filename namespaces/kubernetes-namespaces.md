@@ -117,6 +117,22 @@ kubectl get pods -n dev
 
 ---
 
+## How to access resources across all namespaces
+To list resources across all namespaces, use the `--all-namespaces` flag:
+```sh
+kubectl get pods --all-namespaces
+```
+
+## How to access resources from one namespace to another
+To access resources from one namespace to another, you can specify the namespace in your resource definitions or commands. For example, to access a service in the `dev` namespace from the `default` namespace, you would use the fully qualified domain name (FQDN) of the service:
+
+http://my-service.other-namespace.svc.cluster.local
+
+example:
+
+http://cart-service.dev.svc.cluster.local
+
+
 ## **Deleting a Namespace**
 ```sh
 kubectl delete namespace dev
