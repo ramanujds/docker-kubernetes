@@ -1,12 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: mysql-deployment
 spec:
   selector:
     matchLabels:
       app: mysql
-  replicas: 1
+  replicas: 2
   template:
     metadata:
       labels:
@@ -22,3 +22,17 @@ spec:
             value: password123
           - name: MYSQL_DATABASE
             value: mydb
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-storage
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 5Gi
+      storageClassName: ""
+  serviceName: mysql-service
+

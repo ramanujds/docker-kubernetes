@@ -20,7 +20,7 @@ spec:
               imagePullPolicy: IfNotPresent
               env:
                 - name: MYSQL_HOST
-                  value: mysql-service
+                  value: mysql-0.mysql-service.default.svc.cluster.local
                 - name: MYSQL_PORT
                   value: "3306"
                 - name: MYSQL_DB
