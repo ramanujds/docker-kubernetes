@@ -14,20 +14,10 @@ spec:
     spec:
       containers:
       - name: part-inventory-service
-        image: ram1uj/part-inventory-service
+        image: ram1uj/part-inventory-service:latest
         imagePullPolicy: IfNotPresent
         env:
         - name: SPRING_PROFILES_ACTIVE
           value: "dev"
-        - name: MYSQL_HOST
-          value: "mysql"
-        - name: MYSQL_PORT
-          value: "3306"
-        - name: MYSQL_DATABASE
-          value: "part_inventory_db"
-        - name: MYSQL_USER
-          value: "root"
-        - name: MYSQL_PASSWORD
-          value: "password"
         ports:
         - containerPort: 8080
