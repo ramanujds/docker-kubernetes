@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: part-order-service
+  template:
+    metadata:
+      labels:
+        app: part-order-service
+    spec:
+      containers:
+      - name: part-order-service
+        image: ram1uj/part-order-service
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "dev"
+        - name: MYSQL_HOST
+          value: "mysql"
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_DATABASE
+          value: "part_inventory_db"
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_PASSWORD
+          value: "password"
+        - name: INVENTORY_SERVICE_URL
+          value: "http://part-inventory-service:8080"
+        ports:
+        - containerPort: 8080

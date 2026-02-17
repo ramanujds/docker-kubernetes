@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-gateway
+  labels:
+    app: part-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: part-gateway
+  template:
+    metadata:
+      labels:
+        app: part-gateway
+    spec:
+      containers:
+        - name: part-gateway
+          image: ram1uj/part-gateway-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+              name: http
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: PORT
+              value: "8080"
+            - name: PART_INVENTORY_SERVICE_URL
+              value: http://part-inventory-service:8080
+            - name: PART_ORDER_SERVICE_URL
+              value: http://part-order-service:8080
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 20
