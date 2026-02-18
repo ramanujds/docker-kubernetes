@@ -1,0 +1,81 @@
+name: asset-telemetry-services
+
+networks:
+  asset-telemetry-network:
+
+volumes:
+  mysql-data:
+
+services:
+  mysql:
+    image: mysql:latest
+    networks:
+      asset-telemetry-network:
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: greenko_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-P", "3306", "--silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  asset-service:
+    #    ports:
+    #      - "8081:8080"
+    image: asset-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: greenko_db
+      CONFIG_SERVER_HOST: config-service
+      CONFIG_SERVER_PORT: 8888
+    networks:
+      asset-telemetry-network:
+    depends_on:
+      config-service:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+
+  telemetry-service:
+    #    ports:
+    #      - "8082:8080"
+    image: telemetry-service
+    networks:
+      asset-telemetry-network:
+    environment:
+      ASSET_SERVICE_URL: http://asset-service:8080
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  gateway-service:
+    ports:
+      - "8080:8080"
+    image: gateway-service
+    networks:
+      asset-telemetry-network:
+    environment:
+      ASSET_SERVICE_URL: http://asset-service:8080
+      TELEMETRY_SERVICE_URL: http://telemetry-service:8080
+
+  config-service:
+    ports:
+      - "8888:8888"
+    image: config-server:latest
+    networks:
+      asset-telemetry-network:
+    healthcheck:
+      test: [ "CMD", "curl", "http://localhost:8888/actuator/health/readiness" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 30s
