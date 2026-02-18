@@ -1,54 +1,69 @@
-name: 'notes-app'
+name: Part Inventory and Order Services
 
 networks:
-  app-network:
+    app-network:
+services:
+#  mysql:
+#    image: mysql:latest
+#    environment:
+#      MYSQL_ROOT_PASSWORD: password
+#      MYSQL_DATABASE: part_inventory_db
+##    ports:
+##      - "3306:3306"
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+
+  part-inventory-service:
+    image: ram1uj/part-inventory-service:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: part_inventory_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+    restart: always
+    ports:
+      - "8081:8080"
+#    depends_on:
+#      - mysql
+    networks:
+      - app-network
+
+  part-order-service:
+    image: ram1uj/part-order-service:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: part_inventory_db
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      INVENTORY_SERVICE_URL: http://part-inventory-service:8080
+    restart: always
+    ports:
+      - "8082:8080"
+#    depends_on:
+#      - mysql
+#      - part-inventory-service
+    networks:
+      - app-network
+
+  part-gateway-service:
+    image: ram1uj/part-gateway-service:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      PORT: 8080
+      PART_INVENTORY_SERVICE_URL: http://part-inventory-service:8080
+      PART_ORDER_SERVICE_URL: http://part-order-service:8080
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - part-inventory-service
+      - part-order-service
+    networks:
+      - app-network
 
 volumes:
   mysql_data:
-
-services:
-  mysql:
-    image: mysql:latest
-    #    container_name: mysql
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: notes_db
-    ports:
-      - "3306:3306"
-    networks:
-      - app-network
-    volumes:
-      - mysql_data:/var/lib/mysql
-
-  user-service:
-    image: ram1uj/notes-app-user-service
-    #    container_name: user-service
-    restart: always
-    environment:
-      DB_HOST: mysql
-      DB_NAME: notes_db
-      DB_USER: root
-      DB_PASSWORD: password
-    ports:
-      - "8200-8299:8200"
-    depends_on:
-      - mysql
-    networks:
-      - app-network
-
-  notes-service:
-    image: ram1uj/notes-app-notes-service
-    #    container_name: notes-service
-    restart: always
-    environment:
-      DB_HOST: mysql
-      DB_NAME: notes_db
-      DB_USER: root
-      DB_PASSWORD: password
-    ports:
-      - "8100-8199:8100"
-    depends_on:
-      - mysql
-    networks:
-      - app-network

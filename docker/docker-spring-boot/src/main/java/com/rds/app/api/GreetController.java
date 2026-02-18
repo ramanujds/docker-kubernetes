@@ -18,7 +18,7 @@ public class GreetController
     public Map<String, String> greet()
     {
         return Map.of(
-            "message", "Congratulations! You have successfully deployed your first Spring Boot application with Jenkins on AWS.",
+            "message", "Congratulations! You have successfully deployed your first Spring Boot application",
             "status", "success",
             "timestamp", LocalDateTime.now().toString(),
             "version", "1.0.0",

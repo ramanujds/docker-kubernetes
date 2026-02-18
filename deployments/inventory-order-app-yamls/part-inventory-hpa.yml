@@ -3,7 +3,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: part-inventory-hpa
 spec:
-  maxReplicas: 10
+  maxReplicas: 3
   minReplicas: 2
   scaleTargetRef:
     apiVersion: apps/v1
