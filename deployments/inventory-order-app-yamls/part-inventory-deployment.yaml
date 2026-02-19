@@ -12,20 +12,20 @@ spec:
       labels:
         app: part-inventory-service
     spec:
-      tolerations:
-        - key: "env"
-          operator: "Equal"
-          value: "dev"
-          effect: "NoSchedule"
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                 - key: env
-                   operator: In
-                   values:
-                     - "dev"
+#      tolerations:
+#        - key: "env"
+#          operator: "Equal"
+#          value: "dev"
+#          effect: "NoSchedule"
+#      affinity:
+#        nodeAffinity:
+#          requiredDuringSchedulingIgnoredDuringExecution:
+#            nodeSelectorTerms:
+#              - matchExpressions:
+#                 - key: env
+#                   operator: In
+#                   values:
+#                     - "dev"
 #          preferredDuringSchedulingIgnoredDuringExecution:
 #           - weight: 1
 #             preference:

@@ -29,6 +29,20 @@ eksctl create cluster \
   --managed
 ```
 
+
+#### With autoscaling:
+
+```bash
+
+eksctl create cluster \
+  --name my-cluster --version 1.33 \
+  --region us-east-2 --nodegroup-name my-workers \
+  --node-type t3.medium --nodes 2 --nodes-min 1 --nodes-max 3 \
+  --managed --asg-access
+
+
+```
+
 > It automatically sets up:
 >
 > * EKS control plane
@@ -65,9 +79,7 @@ You should see your nodes in `Ready` status.
 
 ## OPTION 3: Using Terraform (Infrastructure as Code)
 
-Create EKS using Terraform (more complex, good for production/CI/CD). Let me know if you want this and I’ll generate a working project with modules.
-
----
+Create EKS using Terraform (more complex, good for production/CI/CD).
 
 ## What Gets Created?
 

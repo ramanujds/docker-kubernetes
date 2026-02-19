@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: part-order-service
+  template:
+    metadata:
+      labels:
+        app: part-order-service
+    spec:
+      containers:
+        - name: part-order-service
+          image: ram1uj/part-order-service:latest
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+            - name: INVENTORY_SERVICE_URL
+              value: "http://part-inventory-service"
+          ports:
+            - containerPort: 8080
