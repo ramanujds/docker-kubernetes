@@ -1,0 +1,51 @@
+{{- if .Values.partInventory.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-inventory-service
+  labels:
+    app: part-inventory-service
+    {{- include "inventory-order.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.partInventory.replicaCount }}
+  selector:
+    matchLabels:
+      app: part-inventory-service
+      {{- include "inventory-order.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: part-inventory-service
+        {{- include "inventory-order.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: part-inventory-service
+          image: "{{ .Values.partInventory.image.repository }}{{- if .Values.partInventory.image.tag }}:{{ .Values.partInventory.image.tag }}{{- end }}"
+          imagePullPolicy: {{ .Values.partInventory.image.pullPolicy }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.partInventory.env.springProfilesActive | quote }}
+            - name: MYSQL_HOST
+              value: {{ .Values.partInventory.env.mysqlHost | quote }}
+            - name: MYSQL_PORT
+              value: {{ .Values.partInventory.env.mysqlPort | quote }}
+            - name: MYSQL_DATABASE
+              value: {{ .Values.partInventory.env.mysqlDatabase | quote }}
+            - name: MYSQL_USER
+              value: {{ .Values.partInventory.env.mysqlUser | quote }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.partInventory.env.mysqlPassword | quote }}
+          ports:
+            - containerPort: {{ .Values.partInventory.service.targetPort }}
+              name: http
+          {{- with .Values.partInventory.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+---
+{{- end }}
+

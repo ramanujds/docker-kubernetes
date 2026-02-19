@@ -1,0 +1,8 @@
+1. Get the gateway NodePort:
+   {{- if and .Values.partGateway.enabled (eq .Values.partGateway.service.type "NodePort") }}
+   part-gateway NodePort: {{ .Values.partGateway.service.nodePort }}
+   {{- end }}
+
+2. If you use minikube, you can open the service with:
+   minikube service {{ .Values.partGateway.service.name }}
+

@@ -1,0 +1,61 @@
+{{- if .Values.partGateway.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-gateway
+  labels:
+    app: part-gateway
+    {{- include "inventory-order.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.partGateway.replicaCount }}
+  selector:
+    matchLabels:
+      app: part-gateway
+      {{- include "inventory-order.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: part-gateway
+        {{- include "inventory-order.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: part-gateway
+          image: "{{ .Values.partGateway.image.repository }}{{- if .Values.partGateway.image.tag }}:{{ .Values.partGateway.image.tag }}{{- end }}"
+          imagePullPolicy: {{ .Values.partGateway.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.partGateway.service.targetPort }}
+              name: http
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.partGateway.env.springProfilesActive | quote }}
+            - name: PORT
+              value: {{ .Values.partGateway.env.port | quote }}
+            - name: PART_INVENTORY_SERVICE_URL
+              value: {{ .Values.partGateway.env.partInventoryServiceUrl | quote }}
+            - name: PART_ORDER_SERVICE_URL
+              value: {{ .Values.partGateway.env.partOrderServiceUrl | quote }}
+          {{- if .Values.partGateway.readinessProbe.enabled }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.partGateway.readinessProbe.tcpSocketPort }}
+            initialDelaySeconds: {{ .Values.partGateway.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.partGateway.readinessProbe.periodSeconds }}
+          {{- end }}
+          {{- if .Values.partGateway.livenessProbe.enabled }}
+          livenessProbe:
+            tcpSocket:
+              port: {{ .Values.partGateway.livenessProbe.tcpSocketPort }}
+            initialDelaySeconds: {{ .Values.partGateway.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.partGateway.livenessProbe.periodSeconds }}
+          {{- end }}
+          {{- with .Values.partGateway.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+---
+{{- end }}
+

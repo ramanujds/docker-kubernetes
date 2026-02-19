@@ -1,0 +1,84 @@
+# Default values for inventory-order.
+
+nameOverride: ""
+fullnameOverride: ""
+
+commonLabels: { }
+
+imagePullSecrets: [ ]
+
+partGateway:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: ram1uj/part-gateway-service
+    tag: ""
+    pullPolicy: Always
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: 8080
+    nodePort: 30080
+    name: part-gateway-nodeport
+  env:
+    springProfilesActive: prod
+    port: "8080"
+    partInventoryServiceUrl: http://part-inventory-service:8080
+    partOrderServiceUrl: http://part-order-service:8080
+  readinessProbe:
+    enabled: true
+    tcpSocketPort: 8080
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  livenessProbe:
+    enabled: true
+    tcpSocketPort: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 20
+  resources: { }
+
+partInventory:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: ram1uj/part-inventory-service
+    tag: ""
+    pullPolicy: Always
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: 8080
+    nodePort: 30081
+    name: part-inventory-service
+  env:
+    springProfilesActive: dev
+    mysqlHost: mysql
+    mysqlPort: "3306"
+    mysqlDatabase: part_inventory_db
+    mysqlUser: root
+    mysqlPassword: password
+  resources: { }
+
+partOrder:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: ram1uj/part-order-service
+    tag: ""
+    pullPolicy: Always
+  service:
+    type: NodePort
+    port: 8080
+    targetPort: 8080
+    nodePort: 30082
+    name: part-order-service
+  env:
+    springProfilesActive: dev
+    mysqlHost: mysql
+    mysqlPort: "3306"
+    mysqlDatabase: part_inventory_db
+    mysqlUser: root
+    mysqlPassword: password
+    inventoryServiceUrl: http://part-inventory-service:8080
+  resources: { }
+

@@ -12,15 +12,37 @@ spec:
       labels:
         app: part-inventory-service
     spec:
+      tolerations:
+        - key: "env"
+          operator: "Equal"
+          value: "dev"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                 - key: env
+                   operator: In
+                   values:
+                     - "dev"
+#          preferredDuringSchedulingIgnoredDuringExecution:
+#           - weight: 1
+#             preference:
+#               matchExpressions:
+#               - key: end
+#                 operator: In
+#                 values:
+#                   - "prod"
       containers:
       - name: part-inventory-service
         image: ram1uj/part-inventory-service
         imagePullPolicy: IfNotPresent
         env:
         - name: SPRING_PROFILES_ACTIVE
-          value: "prod"
+          value: "dev"
         - name: MYSQL_HOST
-          value: "mysql"
+          value: "mysql.default.svc.cluster.local"
         - name: MYSQL_PORT
           value: "3306"
         - name: MYSQL_DATABASE

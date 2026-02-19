@@ -1,0 +1,53 @@
+{{- if .Values.partOrder.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-order-service
+  labels:
+    app: part-order-service
+    {{- include "inventory-order.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.partOrder.replicaCount }}
+  selector:
+    matchLabels:
+      app: part-order-service
+      {{- include "inventory-order.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app: part-order-service
+        {{- include "inventory-order.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: part-order-service
+          image: "{{ .Values.partOrder.image.repository }}{{- if .Values.partOrder.image.tag }}:{{ .Values.partOrder.image.tag }}{{- end }}"
+          imagePullPolicy: {{ .Values.partOrder.image.pullPolicy }}
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.partOrder.env.springProfilesActive | quote }}
+            - name: MYSQL_HOST
+              value: {{ .Values.partOrder.env.mysqlHost | quote }}
+            - name: MYSQL_PORT
+              value: {{ .Values.partOrder.env.mysqlPort | quote }}
+            - name: MYSQL_DATABASE
+              value: {{ .Values.partOrder.env.mysqlDatabase | quote }}
+            - name: MYSQL_USER
+              value: {{ .Values.partOrder.env.mysqlUser | quote }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.partOrder.env.mysqlPassword | quote }}
+            - name: INVENTORY_SERVICE_URL
+              value: {{ .Values.partOrder.env.inventoryServiceUrl | quote }}
+          ports:
+            - containerPort: {{ .Values.partOrder.service.targetPort }}
+              name: http
+          {{- with .Values.partOrder.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+---
+{{- end }}
+

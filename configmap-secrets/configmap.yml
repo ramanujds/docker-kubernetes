@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spring-configmap
+  namespace: default
+data:
+  message: "Hello from ConfigMap created by Kubernetes"

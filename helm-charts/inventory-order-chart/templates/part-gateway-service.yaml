@@ -1,0 +1,23 @@
+{{- if .Values.partGateway.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.partGateway.service.name }}
+  labels:
+    app: part-gateway
+    {{- include "inventory-order.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: part-gateway
+    {{- include "inventory-order.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: http
+      port: {{ .Values.partGateway.service.port }}
+      targetPort: {{ .Values.partGateway.service.targetPort }}
+      {{- if eq .Values.partGateway.service.type "NodePort" }}
+      nodePort: {{ .Values.partGateway.service.nodePort }}
+      {{- end }}
+  type: {{ .Values.partGateway.service.type }}
+---
+{{- end }}
+

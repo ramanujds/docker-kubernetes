@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-deployment
+spec:
+  selector:
+    matchLabels:
+      app: spring-boot
+  template:
+    metadata:
+      labels:
+        app: spring-boot
+
+    spec:
+      containers:
+      - name: spring-boot-container
+        image: spring-boot-app:latest
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 8080
+        env:
+          - name: APP_MESSAGE
+            valueFrom:
+              secretKeyRef:
+                key: message
+                name: spring-secret
