@@ -17,6 +17,10 @@ spec:
       backendRefs:
         - name: part-inventory-service
           port: 80
+          weight: 90
+        - name: part-inventory-service-v2
+          port: 80
+          weight: 10
 
     - matches:
         - path:

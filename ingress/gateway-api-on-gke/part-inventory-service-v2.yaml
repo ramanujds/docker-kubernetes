@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: part-inventory-service-v2
+spec:
+  selector:
+    app: part-inventory-service
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
