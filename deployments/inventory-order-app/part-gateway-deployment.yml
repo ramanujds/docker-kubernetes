@@ -17,7 +17,7 @@ spec:
       containers:
         - name: part-gateway
           image: ram1uj/part-gateway-service:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               name: http
