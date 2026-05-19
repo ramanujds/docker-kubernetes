@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: part-gateway-service
+  labels:
+    app: part-gateway
+spec:
+  selector:
+    app: part-gateway
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  type: NodePort
