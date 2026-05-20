@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: part-order-service
-          image: ram1uj/part-inventory-service:dotnet
+          image: ram1uj/part-order-service
           imagePullPolicy: Always
           resources:
             requests:
