@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: spring-boot-container
-        image: spring-boot-app:latest
+        image: ram1uj/spring-boot
         imagePullPolicy: Always
         ports:
           - containerPort: 8080
-#        env:
-#          - name: APP_MESSAGE
-#            value: "Hello from Bangalore"
+        env:
+          - name: APP_MESSAGE
+            value: "Hello from Bangalore"
