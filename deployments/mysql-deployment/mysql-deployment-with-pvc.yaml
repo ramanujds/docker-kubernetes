@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
     name: mysql
 spec:
-    replicas: 1
+    replicas: 3
     selector:
       matchLabels:
         app: mysql
@@ -25,10 +25,7 @@ spec:
                 memory: "512Mi"
             env:
               - name: MYSQL_ROOT_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: mysql-secret
-                    key: MYSQL_PASSWORD
+                value: "password"
               - name: MYSQL_DATABASE
                 value: "part_inventory_db"
             ports:

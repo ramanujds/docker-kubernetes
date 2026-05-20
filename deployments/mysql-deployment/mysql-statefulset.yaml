@@ -4,7 +4,7 @@ metadata:
     name: mysql
 spec:
     serviceName: mysql
-    replicas: 2
+    replicas: 3
     selector:
       matchLabels:
         app: mysql
@@ -16,20 +16,11 @@ spec:
         containers:
           - name: mysql
             image: mysql
-            imagePullPolicy: IfNotPresent
-            resources:
-              requests:
-                cpu: "200m"
-                memory: "256Mi"
-              limits:
-                cpu: "500m"
-                memory: "512Mi"
+            imagePullPolicy: Always
+
             env:
               - name: MYSQL_ROOT_PASSWORD
-                valueFrom:
-                  secretKeyRef:
-                    name: mysql-secret
-                    key: MYSQL_PASSWORD
+                value: "password"
               - name: MYSQL_DATABASE
                 value: "part_inventory_db"
             ports:
@@ -45,4 +36,4 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 10Gi
+              storage: 5Gi

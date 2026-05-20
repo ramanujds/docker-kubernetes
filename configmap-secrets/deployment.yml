@@ -15,12 +15,9 @@ spec:
       containers:
       - name: spring-boot-container
         image: spring-boot-app:latest
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         ports:
           - containerPort: 8080
-        env:
-          - name: APP_MESSAGE
-            valueFrom:
-              secretKeyRef:
-                key: message
-                name: spring-secret
+#        env:
+#          - name: APP_MESSAGE
+#            value: "Hello from Bangalore"
