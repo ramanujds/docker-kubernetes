@@ -19,10 +19,10 @@ spec:
           resources:
             requests:
               cpu: "400m"
-              memory: "256Mi"
+              memory: "512Mi"
             limits:
               cpu: "600m"
-              memory: "512Mi"
+              memory: "768Mi"
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "dev"

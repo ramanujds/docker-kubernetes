@@ -4,7 +4,7 @@ metadata:
   name: part-order-service
 spec:
   selector:
-    app: part-order-app
+    app: part-order-service
   type: NodePort
   ports:
     - port: 80

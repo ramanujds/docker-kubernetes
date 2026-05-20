@@ -4,7 +4,7 @@ metadata:
   name: part-inventory-service
 spec:
   selector:
-    app: part-inventory-app
+    app: part-inventory-service
   type: NodePort
   ports:
     - port: 80
