@@ -5,8 +5,8 @@ metadata:
 spec:
   selector:
     app: part-inventory-service
-  type: NodePort
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 8080
-      nodePort: 30081
+#      nodePort: 30081
