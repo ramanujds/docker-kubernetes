@@ -20,3 +20,10 @@ kubectl exec -it nginx -- curl 10.1.0.7:8080/api/parts
 
 expose the pod as a service:
 kubectl expose pod part-inventory-pod --port=80 --target-port=8080
+
+
+Delete the service
+kubectl delete service part-inventory-service
+
+Create a NodePort service
+kubectl expose pod part-inventory-pod --port=80 --target-port=8080 --type=NodePort
