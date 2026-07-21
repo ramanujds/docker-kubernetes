@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: part-order-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: part-order
+
+  template:
+    metadata:
+      labels:
+        app: part-order
+    spec:
+      containers:
+        - name: part-order
+          image: ram1uj/part-order-service:latest
+          ports:
+            - containerPort: 8080
