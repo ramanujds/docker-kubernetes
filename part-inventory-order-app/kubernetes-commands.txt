@@ -12,3 +12,11 @@ kubectl get pods -o wide
 
 get inside the nginx container:
 kubectl exec -it nginx -- sh
+
+or
+
+kubectl exec -it nginx -- curl 10.1.0.7:8080/api/parts
+
+
+expose the pod as a service:
+kubectl expose pod part-inventory-pod --port=80 --target-port=8080
