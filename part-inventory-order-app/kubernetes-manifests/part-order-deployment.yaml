@@ -17,5 +17,9 @@ spec:
       containers:
         - name: part-order
           image: ram1uj/part-order-service:latest
+          imagePullPolicy: Always
+          env:
+            - name: INVENTORY_SERVICE_URL
+              value: "http://part-inventory-service"
           ports:
             - containerPort: 8080
