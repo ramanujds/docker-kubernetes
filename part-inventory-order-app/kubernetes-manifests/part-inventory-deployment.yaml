@@ -2,20 +2,57 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: part-inventory-deployment
-  namespace: default
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1  # At most, 1 pod can be unavailable during the update
+      maxSurge: 1        # At most, 1 extra pod will be created during the update
   selector:
     matchLabels:
       app: part-inventory
-
   template:
     metadata:
       labels:
         app: part-inventory
     spec:
       containers:
-        - name: part-inventory
-          image: ram1uj/part-inventory-service:latest
+        - name: part-inventory-service
+          image: ram1uj/part-inventory-service:v2
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: "400m"
+              memory: "512Mi"
+            limits:
+              cpu: "600m"
+              memory: "768Mi"
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 10
+
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            failureThreshold: 3
+
+          readinessProbe:
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 3
           ports:
             - containerPort: 8080
