@@ -5,3 +5,6 @@ kubectl run nginx --image=nginx
 kubectl get pods
 
 kubectl run part-inventory-pod --image=ram1uj/part-inventory-service
+
+get inside the nginx container:
+kubectl exec -it nginx -- sh
