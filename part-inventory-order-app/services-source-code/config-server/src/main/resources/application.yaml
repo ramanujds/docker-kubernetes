@@ -1,0 +1,25 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/ramanujds/part-config-repo
+          default-label: main
+          clone-on-start: true
+          search-paths:
+            - global
+            - services/*
+            - environments/{profile}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+

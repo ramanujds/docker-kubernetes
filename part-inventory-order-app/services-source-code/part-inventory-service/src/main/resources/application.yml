@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: part-inventory-service
+
+  profiles:
+    active: dev
+
+  config:
+    import: optional:configserver:http://${CONFIG_SERVER_HOST:localhost}:${CONFIG_SERVER_PORT:8888}
+

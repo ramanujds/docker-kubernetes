@@ -1,0 +1,33 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: part-inventory-service-prefix
+              uri: ${PART_INVENTORY_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/inventory/**
+              filters:
+                - StripPrefix=1
+            - id: part-inventory-service-direct
+              uri: ${PART_INVENTORY_SERVICE_URL:http://localhost:8081}
+              predicates:
+                - Path=/parts/**,/inventory-update/**
+
+            - id: part-order-service-prefix
+              uri: ${PART_ORDER_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/orders/**
+              filters:
+                - StripPrefix=1
+
+            - id: part-order-service-direct
+              uri: ${PART_ORDER_SERVICE_URL:http://localhost:8082}
+              predicates:
+                - Path=/place-order/**,/available-parts/**
+
+
