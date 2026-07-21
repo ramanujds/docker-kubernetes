@@ -46,3 +46,10 @@ kubectl get deployments
 kubectl expose deployment part-inventory-deployment --type=NodePort --port=80 --target-port=8080
 
 kubectl get services
+
+
+kubectl scale deployment part-inventory-deployment --replicas=3
+
+kubectl get pods
+
+
