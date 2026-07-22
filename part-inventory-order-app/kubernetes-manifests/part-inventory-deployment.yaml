@@ -17,6 +17,15 @@ spec:
       labels:
         app: part-inventory
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: disktype
+                    operator: In
+                    values:
+                      - ssd
       containers:
         - name: part-inventory-service
           image: ram1uj/part-inventory-service:v2
