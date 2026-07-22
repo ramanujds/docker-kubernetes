@@ -19,6 +19,33 @@ spec:
           image: ram1uj/part-order-service:latest
           imagePullPolicy: Always
           env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "prod"
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: part-inventory-config
+                  key: MYSQL_HOST
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: part-inventory-config
+                  key: MYSQL_PORT
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: part-inventory-config
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
             - name: INVENTORY_SERVICE_URL
               value: "http://part-inventory-service"
           ports:

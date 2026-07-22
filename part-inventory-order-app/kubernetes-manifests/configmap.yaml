@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: part-inventory-config
+  namespace: default
+data:
+  MYSQL_HOST: "mysql-0.mysql.default.svc.cluster.local"
+  MYSQL_PORT: "3306"
+  MYSQL_DATABASE: "part_inventory_db"
